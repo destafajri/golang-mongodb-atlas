@@ -8,12 +8,20 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
+type Podcast struct {
+	ID     primitive.ObjectID `bson:"_id,omitempty"`
+	Title  string             `bson:"title,omitempty"`
+	Author string             `bson:"author,omitempty"`
+	Tags   []string           `bson:"tags,omitempty"`
+}
+
 func main() {
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://destafajri:<Mu1V2tQMvc2qrzBW>@cluster0.u7lz8u5.mongodb.net/?retryWrites=true&w=majority"))
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://destafajri:Mu1V2tQMvc2qrzBW@cluster0.u7lz8u5.mongodb.net/?retryWrites=true&w=majority"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -34,4 +42,19 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(databases)
+
+	database := client.Database("Learn")
+	podcastsCollection := database.Collection("Learn")
+
+	podcast := Podcast{
+		Title:  "The Polyglot Developer",
+		Author: "Nic Raboy",
+		Tags:   []string{"development", "programming", "coding"},
+	}
+	insertResult, err := podcastsCollection.InsertOne(ctx, podcast)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(insertResult.InsertedID)
+
 }
