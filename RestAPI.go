@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	client, err := mongo.NewClient(options.Client().ApplyURI("<ATLAS_URI_HERE>"))
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://destafajri:<Mu1V2tQMvc2qrzBW>@cluster0.u7lz8u5.mongodb.net/?retryWrites=true&w=majority"))
 	if err != nil {
 		log.Fatal(err)
 	}
