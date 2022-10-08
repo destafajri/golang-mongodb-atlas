@@ -1,4 +1,4 @@
-# golang-mongodb-atlas
+# Golang-mongodb-atlas
 Golang Code Create Connection with MongoDB Atlas and insert Single document
 
 Resource/Documentation :
