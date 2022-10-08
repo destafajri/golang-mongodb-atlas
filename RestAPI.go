@@ -6,6 +6,10 @@ import (
 	"log"
 	"time"
 
+	"bufio"
+	"os"
+	"strings"
+	
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -21,7 +25,22 @@ type Podcast struct {
 }
 
 func main() {
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://destafajri:Mu1V2tQMvc2qrzBW@cluster0.u7lz8u5.mongodb.net/?retryWrites=true&w=majority"))
+	//credential input
+	fmt.Print("Username: ")
+	scannerUser := bufio.NewScanner(os.Stdin)
+   	scannerUser.Scan()
+    username := scannerUser.Text()
+    fmt.Print("Password: ")
+	scannerPass := bufio.NewScanner(os.Stdin)
+   	scannerPass.Scan()
+    pass := scannerPass.Text()
+	fmt.Print(username)
+	credentialArray := []string {"mongodb+srv://", username, ":", pass, "@cluster0.u7lz8u5.mongodb.net/?retryWrites=true&w=majority"}
+	credential := strings.Join(credentialArray,"")
+	fmt.Println(credential)
+
+	//mongoDB connection
+	client, err := mongo.NewClient(options.Client().ApplyURI(credential))
 	if err != nil {
 		log.Fatal(err)
 	}
